@@ -4,7 +4,6 @@ const WHATSAPP_NUMBER = '77003605300';
 const messages = {
   default: 'Здравствуйте! Хочу получить программу и стоимость курса Aveno Academy.',
   program: 'Здравствуйте! Пришлите, пожалуйста, полную программу курса Aveno Academy и стоимость обучения.',
-  question: 'Здравствуйте! Хочу узнать, подойдёт ли мне курс Aveno Academy. Можно получить консультацию?',
   faq: 'Здравствуйте! Хочу узнать программу, стоимость курса Aveno Academy и какие инструменты и подписки понадобятся для обучения.',
 };
 const whatsappUrl = (message) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
@@ -40,59 +39,6 @@ document.addEventListener('click', (event) => {
 });
 window.matchMedia('(min-width: 641px)').addEventListener('change', closeMenu);
 
-const examples = {
-  documents: {
-    number: '01',
-    request: 'Сравнить два предложения от подрядчиков и понять, какое подходит лучше.',
-    title: 'Сравнение, с которым можно принять решение',
-    items: ['Условия и отличия в одной таблице', 'Сильные стороны и возможные риски', 'Вывод с учётом ваших приоритетов'],
-  },
-  analysis: {
-    number: '02',
-    request: 'Разобраться в большом отчёте и подготовить главное к встрече с командой.',
-    title: 'Короткая сводка вместо десятков страниц',
-    items: ['Главные факты и ключевые изменения', 'Выводы с опорой на исходные данные', 'Вопросы и следующие шаги для обсуждения'],
-  },
-  routine: {
-    number: '03',
-    request: 'Каждую неделю готовить однотипный отчёт из новых данных, не объясняя задачу заново.',
-    title: 'Повторяемый процесс для регулярной задачи',
-    items: ['Сохранённые требования к результату', 'Единая структура для новых данных', 'Черновик, который остаётся проверить'],
-  },
-};
-const tabs = [...document.querySelectorAll('[data-task]')];
-function selectTask(tab) {
-  const example = examples[tab.dataset.task];
-  tabs.forEach((item) => {
-    item.setAttribute('aria-selected', String(item === tab));
-    item.tabIndex = item === tab ? 0 : -1;
-  });
-  document.querySelector('#task-panel').setAttribute('aria-labelledby', tab.id);
-  document.querySelector('.example-top > span:last-child').textContent = `${example.number} / 03`;
-  document.querySelector('#example-request').textContent = example.request;
-  document.querySelector('#example-title').textContent = example.title;
-  document.querySelector('#example-list').replaceChildren(...example.items.map((text) => {
-    const item = document.createElement('li');
-    item.textContent = text;
-    return item;
-  }));
-}
-tabs.forEach((tab, index) => {
-  tab.addEventListener('click', () => selectTask(tab));
-  tab.addEventListener('keydown', (event) => {
-    let next;
-    if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
-    if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
-    if (event.key === 'Home') next = 0;
-    if (event.key === 'End') next = tabs.length - 1;
-    if (next !== undefined) {
-      event.preventDefault();
-      selectTask(tabs[next]);
-      tabs[next].focus();
-    }
-  });
-});
-
 const form = document.querySelector('#lead-form');
 const nameInput = document.querySelector('#lead-name');
 const phoneInput = document.querySelector('#lead-phone');
@@ -126,7 +72,7 @@ form.addEventListener('submit', (event) => {
   }
   if (digits.length === 11 && digits.startsWith('8')) digits = `7${digits.slice(1)}`;
   if (digits.length === 10 && !rawPhone.startsWith('+')) digits = `7${digits}`;
-  const url = whatsappUrl(`Здравствуйте! Хочу получить консультацию по курсу Aveno Academy.\n\nМеня зовут: ${name}\nМой телефон: +${digits}\n\nРасскажите, пожалуйста, о программе и стоимости обучения.`);
+  const url = whatsappUrl(`Здравствуйте! Хочу получить программу и стоимость курса Aveno Academy.\n\nМеня зовут: ${name}\nМой телефон: +${digits}\n\nРасскажите, пожалуйста, о программе и стоимости обучения.`);
   document.querySelector('#form-fallback').href = url;
   window.open(url, '_blank', 'noopener,noreferrer');
   feedback.hidden = false;

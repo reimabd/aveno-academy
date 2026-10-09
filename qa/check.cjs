@@ -24,12 +24,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
       assert.equal(url.origin + url.pathname, 'https://wa.me/77003605300');
       assert(url.searchParams.get('text').includes('Aveno Academy'));
     }
-    await page.getByRole('tab', { name: 'Анализ', exact: true }).click();
-    assert((await page.locator('#example-title').textContent()).includes('Короткая сводка'));
-    await page.getByRole('tab', { name: 'Анализ', exact: true }).press('ArrowRight');
-    assert.equal(await page.getByRole('tab', { name: 'Рутина', exact: true }).getAttribute('aria-selected'), 'true');
-    assert((await page.locator('#example-title').textContent()).includes('Повторяемый процесс'));
-    await page.getByRole('tab', { name: 'Документы', exact: true }).click();
+    assert.deepEqual(await page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby') || section.className)), ['hero-title', 'inside-title', 'results-title', 'learning-title', 'consultation-title', 'faq-title', 'final-section']);
+    assert.equal(await page.locator('.outcome-card').count(), 4);
+    assert.equal(await page.locator('.outcome-card img').count(), 0);
+    assert.equal(await page.locator('.outcome-art').count(), 4);
+    assert.equal(await page.locator('.shift, .practice, .topic-strip').count(), 0);
+    assert((await page.locator('h1').innerText()).replace(/\s+/g, ' ').includes('Используйте ИИ как профессионал.'));
     await page.locator('.faq-list summary').first().click();
     assert.equal(await page.locator('.faq-list details').first().getAttribute('open'), '');
     await page.locator('.faq-list summary').first().click();
@@ -49,6 +49,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
     const submitted = new URL(await page.evaluate(() => window.__openedUrls[0]));
     assert.equal(submitted.pathname, '/77003605300');
     assert(submitted.searchParams.get('text').includes('Тест Aveno'));
+    assert(submitted.searchParams.get('text').includes('программу и стоимость'));
     assert(submitted.searchParams.get('text').includes('+77012345678'));
     assert.equal(await page.locator('.form-feedback').isVisible(), true);
     assert.equal(await page.locator('#form-fallback').getAttribute('href'), submitted.href);
@@ -76,7 +77,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
       }
     }
     assert.deepEqual(errors, []);
-    console.log('PASS: 7 responsive widths, no overflow or asset errors, all WhatsApp links, tabs + keyboard, FAQ, mobile menu, form validation and correct message. No message sent.');
+    console.log('PASS: 7 responsive widths, no overflow or asset errors, seven-section order, four original SVG cards, all WhatsApp links, FAQ, mobile menu, form validation and correct message. No message sent.');
   } finally {
     await browser.close();
   }
