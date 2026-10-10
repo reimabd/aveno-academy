@@ -46,6 +46,10 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
     assert.equal(await page.evaluate(() => window.__openedUrls.length), 0);
     await page.locator('#lead-phone').fill('8 (701) 234-56-78');
     await page.locator('#lead-form button').click();
+    assert.equal(await page.locator('#lead-consent').getAttribute('aria-invalid'), 'true');
+    assert.equal(await page.evaluate(() => window.__openedUrls.length), 0);
+    await page.locator('#lead-consent').check();
+    await page.locator('#lead-form button').click();
     const submitted = new URL(await page.evaluate(() => window.__openedUrls[0]));
     assert.equal(submitted.pathname, '/77003605300');
     assert(submitted.searchParams.get('text').includes('Тест Aveno'));
@@ -76,8 +80,21 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
         assert.equal(await page.locator('#mobile-nav').isVisible(), false);
       }
     }
+    assert.equal(await page.locator('.requisites div').count(), 8);
+    for (const doc of ['privacy', 'consent']) {
+      await page.goto(`http://localhost:4173/${doc}.html`, { waitUntil: 'networkidle' });
+      assert.equal(await page.locator('.doc-links a[aria-current="page"]').getAttribute('href'), `${doc}.html`);
+      for (const width of [320, 390, 1440]) {
+        await page.setViewportSize({ width, height: 844 });
+        const size = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
+        assert(size.scroll <= size.client + 1, `Horizontal overflow on ${doc} at ${width}`);
+      }
+      await page.screenshot({ path: path.join(screenshots, `${doc}-desktop.png`) });
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.screenshot({ path: path.join(screenshots, `${doc}-mobile.png`), fullPage: true });
+    }
     assert.deepEqual(errors, []);
-    console.log('PASS: 7 responsive widths, no overflow or asset errors, seven-section order, four original SVG cards, all WhatsApp links, FAQ, mobile menu, form validation and correct message. No message sent.');
+    console.log('PASS: 7 responsive widths, no overflow or asset errors, seven-section order, four original SVG cards, all WhatsApp links, FAQ, mobile menu, form validation incl. consent, requisites, legal pages and correct message. No message sent.');
   } finally {
     await browser.close();
   }

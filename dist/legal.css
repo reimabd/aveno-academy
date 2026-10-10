@@ -1,0 +1,52 @@
+/* Legal: requisites footer, consent checkbox, document pages. */
+.legal{border-top:1px solid var(--line);padding-block:34px 40px;font-size:11px;color:var(--muted)}
+.requisites{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 32px;margin:0}
+.requisites div{min-width:0}
+.requisites dt{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#a0a5ad;margin-bottom:6px}
+.requisites dd{margin:0;color:var(--ink);font-weight:600;line-height:1.6;overflow-wrap:anywhere}
+.requisites a:hover,.legal-bottom a:hover{color:var(--blue)}
+.legal-bottom{display:flex;justify-content:space-between;align-items:center;gap:14px 28px;flex-wrap:wrap;margin-top:32px;padding-top:22px;border-top:1px solid var(--line)}
+.legal-bottom small{font-size:10px}
+.legal-bottom nav{display:flex;gap:24px;flex-wrap:wrap}
+.legal-bottom nav a{font-size:10px;font-weight:700;color:var(--ink)}
+
+.lead-form .consent-check{display:flex;align-items:flex-start;gap:11px;margin-top:20px;font-size:10px;font-weight:500;line-height:1.6;color:#6f7580;cursor:pointer}
+.lead-form .consent-check input{flex:none;width:18px;height:18px;margin:0;padding:0;border-radius:4px;accent-color:var(--blue);cursor:pointer}
+.lead-form .consent-check input[aria-invalid="true"]{outline:2px solid #d92d20;outline-offset:2px}
+.lead-form .consent-check a{color:var(--blue);font-weight:700}
+
+.doc{display:grid;grid-template-columns:.8fr 1.2fr;gap:75px;padding-block:90px 110px}
+.doc-head{position:sticky;top:40px;align-self:start}
+.doc-head h1{font-size:44px;line-height:1.13;letter-spacing:-2px;overflow-wrap:break-word;hyphens:auto}
+.doc-date{font-size:12px;color:var(--muted);margin-top:20px}
+.doc-links{display:flex;flex-direction:column;gap:12px;margin-top:38px;padding-top:24px;border-top:1px solid var(--line)}
+.doc-links a{font-size:12px;font-weight:700;display:flex;align-items:center;gap:8px}
+.doc-links a[aria-current]{color:var(--blue)}
+.doc-links svg{width:14px;height:14px}
+.doc-body{max-width:680px;font-size:14px;line-height:1.75;color:#4a4f58}
+.doc-body>p:first-child{font-size:16px;color:var(--ink)}
+.doc-body h2{font-size:22px;letter-spacing:-.8px;line-height:1.3;color:var(--ink);margin:48px 0 14px}
+.doc-body p+p,.doc-body ul+p{margin-top:12px}
+.doc-body ul{margin:12px 0 0;padding-left:20px}
+.doc-body li+li{margin-top:6px}
+.doc-body a{color:var(--blue);font-weight:700}
+.doc-body strong{color:var(--ink)}
+.doc-card{background:var(--paper);border-radius:14px;padding:22px 24px;margin-top:16px}
+.doc-card p+p{margin-top:4px}
+
+@media(max-width:900px){.requisites{grid-template-columns:repeat(2,minmax(0,1fr))}.doc{grid-template-columns:minmax(0,1fr);gap:40px;padding-block:60px 80px}.doc-head{position:static}}
+@media(max-width:640px){
+  .footer{padding-bottom:24px}
+  .legal{padding-block:26px 110px}
+  .requisites{grid-template-columns:minmax(0,1fr);gap:12px}
+  .requisites div{display:grid;grid-template-columns:86px minmax(0,1fr);gap:12px;align-items:baseline}
+  .requisites dt{margin:0}
+  .legal-bottom{flex-direction:column-reverse;align-items:flex-start;margin-top:24px}
+  .legal-bottom nav{flex-direction:column;gap:12px}
+  .doc{padding-block:44px 60px}
+  .doc-head h1{font-size:34px;letter-spacing:-1.5px}
+  .doc-body{font-size:14px}
+  .doc-body h2{font-size:19px;margin-top:38px}
+  .page-legal .legal{padding-bottom:40px}
+}
+@media(max-width:360px){.doc-head h1{font-size:29px;letter-spacing:-1.2px}}

@@ -42,12 +42,14 @@ window.matchMedia('(min-width: 641px)').addEventListener('change', closeMenu);
 const form = document.querySelector('#lead-form');
 const nameInput = document.querySelector('#lead-name');
 const phoneInput = document.querySelector('#lead-phone');
+const consentInput = document.querySelector('#lead-consent');
 const formError = document.querySelector('#form-error');
 const feedback = document.querySelector('.form-feedback');
 form.addEventListener('input', () => {
   formError.hidden = true;
   nameInput.removeAttribute('aria-invalid');
   phoneInput.removeAttribute('aria-invalid');
+  consentInput.removeAttribute('aria-invalid');
   feedback.hidden = true;
 });
 form.addEventListener('submit', (event) => {
@@ -68,6 +70,13 @@ form.addEventListener('submit', (event) => {
     formError.hidden = false;
     phoneInput.setAttribute('aria-invalid', 'true');
     phoneInput.focus();
+    return;
+  }
+  if (!consentInput.checked) {
+    formError.textContent = 'Отметьте согласие на обработку персональных данных, чтобы отправить заявку.';
+    formError.hidden = false;
+    consentInput.setAttribute('aria-invalid', 'true');
+    consentInput.focus();
     return;
   }
   if (digits.length === 11 && digits.startsWith('8')) digits = `7${digits.slice(1)}`;
