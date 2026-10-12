@@ -37,4 +37,4 @@ python3 -m http.server 4173 --directory dist
 
 Браузерные проверки находятся в `qa/check.cjs`. Для запуска требуется Playwright и установленный Chrome; путь к Playwright задаётся через `PLAYWRIGHT_MODULE_PATH`. Проверяются адаптивность, новая структура, четыре SVG-карточки, меню, FAQ, CTA, валидация формы и содержимое WhatsApp-сообщения. Тест не отправляет сообщения.
 
-Размещение на Sites описано в `.openai/hosting.json`. Публичный доступ включён по запросу владельца. При обновлениях сохраняется тот же адрес: https://aveno-academy.swqqs.chatgpt.site.
+Сайт размещён на GitHub Pages (`reimabd/aveno-academy`) по адресу https://aveno.academy. Каждый push в `main` публикует папку `dist/` через `.github/workflows/pages.yml`. DNS домена ведётся на ps.kz: четыре A-записи на 185.199.108–111.153 и CNAME `www` → `reimabd.github.io`. Старая копия на chatgpt.site (`.openai/hosting.json`) больше не обновляется.
