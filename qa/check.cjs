@@ -24,7 +24,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
       assert.equal(url.origin + url.pathname, 'https://wa.me/77003605300');
       assert(url.searchParams.get('text').includes('Aveno Academy'));
     }
-    assert.deepEqual(await page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby') || section.className)), ['hero-title', 'inside-title', 'results-title', 'learning-title', 'price-title', 'faq-title', 'final-section']);
+    assert.deepEqual(await page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby') || section.className)), ['hero-title', 'inside-title', 'results-title', 'price-title', 'learning-title', 'faq-title', 'final-section']);
     assert.equal(await page.locator('.outcome-card').count(), 4);
     assert.equal(await page.locator('.outcome-card img').count(), 0);
     assert.equal(await page.locator('.outcome-art').count(), 4);

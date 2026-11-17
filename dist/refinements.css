@@ -85,3 +85,23 @@
 @media(max-width:640px){.pricing.section{padding-block:64px}.pricing h2{font-size:41px;letter-spacing:-1.8px}.pricing .consultation-grid{gap:26px}.price-features{margin-top:22px;gap:13px}.price-features li{gap:13px}.feature-check{width:24px;height:24px}.feature-check svg{width:14px;height:14px}.price-features li span:not(.feature-check){margin-top:1px;line-height:1.5}.price-card{padding:28px 23px;border-radius:16px}.consultation-grid .price-card .price-new{font-size:clamp(46px,14vw,60px)}.consultation-grid .price-card .price-old{font-size:22px;margin-top:24px}.price-card .button{margin-top:24px}.final-price strong{font-size:26px}}
 @media(max-width:360px){.pricing h2{font-size:34px}.price-badge{font-size:9px;padding:7px 10px}.price-card .button{font-size:11px;padding-inline:16px}}
 @media(prefers-reduced-motion:reduce){.price-card.will-strike .price-strike path,.price-card.will-strike .price-old,.price-card.will-strike .price-saving{transition:none}}
+/* November update: shorter page. Inside: 4 cards (pace and certificate live in the price block). */
+.benefit:last-child{grid-column:2 / -1}
+.learning+.faq{border-top:1px solid var(--line)}
+@media(max-width:640px){
+.benefit:last-child{grid-column:1 / -1}
+.benefit{min-height:0}
+.prompt-chips,.benefit-footer{display:none}
+.benefit-feature{min-height:0}
+.platform-type{margin-top:18px}
+/* Outcome cards: compact row (icon + text) instead of a tall illustrated card. */
+.outcome-card{min-height:0;padding:20px 20px 22px}
+.outcome-art{display:none}
+.outcome-copy{display:grid;grid-template-columns:30px 1fr;column-gap:14px}
+.outcome-icon{margin:2px 0 0;width:26px;height:26px;grid-row:span 2}
+.outcome-card h3{font-size:19px;letter-spacing:-.5px}
+.outcome-card h3 br,.outcome-card p br{display:none}
+.outcome-card p{margin-top:6px}
+.outcome-grid{gap:10px}
+}
+@media(max-width:360px){.outcome-card{min-height:0;padding:18px}.outcome-card h3{font-size:17px}}
