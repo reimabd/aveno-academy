@@ -18,13 +18,13 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
     await page.screenshot({ path: path.join(screenshots, 'desktop-hero.png') });
 
     const ctas = await page.locator('[data-wa]').evaluateAll((links) => links.map((link) => link.href));
-    assert(ctas.length >= 8);
+    assert(ctas.length >= 5);
     for (const href of ctas) {
       const url = new URL(href);
       assert.equal(url.origin + url.pathname, 'https://wa.me/77003605300');
       assert(url.searchParams.get('text').includes('Aveno Academy'));
     }
-    assert.deepEqual(await page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby') || section.className)), ['hero-title', 'inside-title', 'results-title', 'learning-title', 'consultation-title', 'faq-title', 'final-section']);
+    assert.deepEqual(await page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.getAttribute('aria-labelledby') || section.className)), ['hero-title', 'inside-title', 'results-title', 'learning-title', 'price-title', 'faq-title', 'final-section']);
     assert.equal(await page.locator('.outcome-card').count(), 4);
     assert.equal(await page.locator('.outcome-card img').count(), 0);
     assert.equal(await page.locator('.outcome-art').count(), 4);
@@ -34,31 +34,21 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
     assert.equal(await page.locator('.faq-list details').first().getAttribute('open'), '');
     await page.locator('.faq-list summary').first().click();
 
-    await page.evaluate(() => { window.__openedUrls = []; window.open = (url) => window.__openedUrls.push(url); });
-    await page.locator('#lead-name').fill('  ');
-    await page.locator('#lead-phone').fill('+7 701 234 56 78');
-    await page.locator('#lead-form button').click();
-    assert.equal(await page.locator('#lead-name').getAttribute('aria-invalid'), 'true');
-    await page.locator('#lead-name').fill('Тест Aveno');
-    await page.locator('#lead-phone').fill('не номер');
-    await page.locator('#lead-form button').click();
-    assert.equal(await page.locator('#lead-phone').getAttribute('aria-invalid'), 'true');
-    assert.equal(await page.evaluate(() => window.__openedUrls.length), 0);
-    await page.locator('#lead-phone').fill('8 (701) 234-56-78');
-    await page.locator('#lead-form button').click();
-    assert.equal(await page.locator('#lead-consent').getAttribute('aria-invalid'), 'true');
-    assert.equal(await page.evaluate(() => window.__openedUrls.length), 0);
-    await page.locator('#lead-consent').check();
-    await page.locator('#lead-form button').click();
-    const submitted = new URL(await page.evaluate(() => window.__openedUrls[0]));
-    assert.equal(submitted.pathname, '/77003605300');
-    assert(submitted.searchParams.get('text').includes('Тест Aveno'));
-    assert(submitted.searchParams.get('text').includes('программу и стоимость'));
-    assert(submitted.searchParams.get('text').includes('+77012345678'));
-    assert.equal(await page.locator('.form-feedback').isVisible(), true);
-    assert.equal(await page.locator('#form-fallback').getAttribute('href'), submitted.href);
-    await page.locator('#lead-name').fill('');
-    await page.locator('#lead-phone').fill('');
+    assert.equal(await page.locator('#lead-form').count(), 0);
+    assert.equal((await page.locator('.price-card .price-new').innerText()).endsWith('69\u00a0900\u00a0₸'), true);
+    assert.equal(await page.locator('.price-card .price-old s').innerText(), '89\u00a0900\u00a0₸');
+    assert.equal(await page.locator('.price-features li').count(), 4);
+    assert.equal(await page.locator('.price-card .price-saving').innerText(), 'Выгода 20\u00a0000\u00a0₸');
+    assert.equal(await page.locator('.price-card.is-struck').count(), 0);
+    await page.locator('.price-card').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1400);
+    assert.equal(await page.locator('.price-card.is-struck').count(), 1);
+    const buy = new URL(await page.locator('.price-card [data-wa="buy"]').getAttribute('href'));
+    assert(buy.searchParams.get('text').includes('AI Starter'));
+    assert(buy.searchParams.get('text').includes('69 900 ₸'));
+    for (const selector of ['.header-contact', '.hero .button', '.inside-bottom .text-link']) assert.equal(await page.locator(selector).getAttribute('href'), '#price');
+    await page.locator('.price-card').screenshot({ path: path.join(screenshots, 'price-card.png') });
+    await page.locator('#price').screenshot({ path: path.join(screenshots, 'price-desktop.png') });
 
     for (const width of [320, 360, 390, 430, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 844 });
@@ -71,6 +61,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
       if (width === 390) {
         await page.screenshot({ path: path.join(screenshots, 'mobile.png'), fullPage: true });
         await page.screenshot({ path: path.join(screenshots, 'mobile-hero.png') });
+        await page.locator('#price').screenshot({ path: path.join(screenshots, 'price-mobile.png') });
         await page.locator('.menu-toggle').click();
         assert.equal(await page.locator('#mobile-nav').isVisible(), true);
         await page.locator('#mobile-nav a[href="#inside"]').click();
@@ -94,7 +85,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
       await page.screenshot({ path: path.join(screenshots, `${doc}-mobile.png`), fullPage: true });
     }
     assert.deepEqual(errors, []);
-    console.log('PASS: 7 responsive widths, no overflow or asset errors, seven-section order, four original SVG cards, all WhatsApp links, FAQ, mobile menu, form validation incl. consent, requisites, legal pages and correct message. No message sent.');
+    console.log('PASS: 7 responsive widths, no overflow or asset errors, seven-section order, four original SVG cards, all WhatsApp links, FAQ, mobile menu, price block (69 900 ₸ / 89 900 ₸, 4 features, WhatsApp buy message), anchors to #price, requisites, legal pages and correct message. No message sent.');
   } finally {
     await browser.close();
   }

@@ -45,3 +45,43 @@
 @media(max-width:900px){.hero h1{font-size:46px;letter-spacing:-2.6px}.hero{min-height:650px}.results h2{font-size:38px}.outcome-grid{gap:16px}.outcome-card{padding:25px;min-height:325px}.outcome-card h3{font-size:23px}.outcome-card p{font-size:12px}.outcome-art{width:180px;height:140px;right:2px}.outcome-icon{margin-bottom:80px}.consultation h2{font-size:34px;letter-spacing:-1.5px}.final-content h2{font-size:49px}.final-emblem{right:-50px}}
 @media(max-width:640px){.hero{min-height:0}.hero h1{font-size:clamp(37px,10.3vw,60px);letter-spacing:-2.5px}.hero-description{max-width:410px}.task-paper p{font-size:17px}.inside{padding-top:62px}.results h2{font-size:35px}.outcome-grid{grid-template-columns:minmax(0,1fr);gap:16px;margin-top:30px}.outcome-card{padding:25px;min-height:316px;border-radius:14px}.outcome-art{width:210px;height:163px;right:4px;top:5px}.outcome-icon{margin-bottom:88px;width:26px;height:26px}.outcome-card h3{font-size:24px;letter-spacing:-.7px}.outcome-card p{font-size:12px;margin-top:12px}.consultation h2{font-size:36px;letter-spacing:-1.6px}.final-content h2{font-size:39px;letter-spacing:-1.8px;line-height:1.18}.final-motto{font-size:9px;letter-spacing:0;margin-top:28px}.final-emblem{right:-72px;top:55px;opacity:.13}.final-bottom{margin-top:25px}}
 @media(max-width:360px){.hero h1{font-size:36px;letter-spacing:-2.3px}.outcome-card{padding:22px;min-height:311px}.outcome-card h3{font-size:21px}.outcome-art{width:190px;height:148px}.outcome-icon{margin-bottom:80px}.consultation h2{font-size:31px}.final-content h2{font-size:32px}}
+/* November update: AI Starter price block. */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.button-lime{background:var(--lime);color:var(--ink)}
+.button-lime:hover{background:#e6ff94;box-shadow:0 8px 24px #d9ff6533}
+.button:active{transform:scale(.98)}
+.pricing h2{font-size:56px}
+.pricing .circled{margin-left:.12em}
+.pricing .circled:after{left:-9px;right:-12px}
+.price-features{list-style:none;padding:0;margin:40px 0 0;display:grid;gap:22px;max-width:470px}
+.price-features li{display:flex;gap:16px;align-items:flex-start}
+.feature-check{width:28px;height:28px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;flex:none;margin-top:1px}
+.feature-check svg{width:16px;height:16px;stroke-width:2.4}
+.price-features strong{display:block;font-size:17px;font-weight:800;letter-spacing:-.4px;line-height:1.4}
+.price-features li span:not(.feature-check){display:block;font-size:13px;line-height:1.6;color:#d2e2ff;margin-top:4px}
+.price-card{background:radial-gradient(120% 90% at 100% 0%,#d9ff651c,transparent 55%),var(--ink);color:white;border-radius:18px;padding:40px;box-shadow:0 18px 40px #00308a59}
+.price-badge{display:inline-block;background:var(--lime);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:1.4px;padding:8px 13px;border-radius:999px}
+.consultation-grid .price-card .price-old{position:relative;display:block;width:fit-content;margin-top:30px;font-size:26px;font-weight:600;color:#8a909c;letter-spacing:-.8px;line-height:1.2}
+.price-old s{text-decoration:none}
+.price-strike{position:absolute;left:-6px;right:-6px;top:50%;width:calc(100% + 12px);height:22px;transform:translateY(-50%);stroke:var(--lime);stroke-width:3.4;overflow:visible}
+.consultation-grid .price-card .price-new{color:white;font-size:clamp(58px,5.6vw,78px);font-weight:800;letter-spacing:-3.5px;line-height:1.05;margin-top:4px;white-space:nowrap}
+.consultation-grid .price-card .price-saving{display:inline-block;margin-top:14px;font-size:16px;font-weight:800;letter-spacing:-.2px;color:var(--lime)}
+.price-card .button{width:100%;margin-top:30px;justify-content:space-between}
+.price-card .button svg{width:22px;height:22px}
+.consultation-grid .price-card .price-note{font-size:12px;color:#8a909c;margin-top:12px;text-align:center}
+/* One-time strike when the card scrolls into view (class added by app.js). */
+.price-card.will-strike .price-strike path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.6,0,.2,1) .2s}
+.price-card.will-strike .price-old{transition:color .4s .5s}
+.price-card.will-strike:not(.is-struck) .price-old{color:#c3c7cf}
+.price-card.will-strike .price-saving{opacity:0;transform:translateY(6px);transition:opacity .4s .85s,transform .4s .85s}
+.price-card.is-struck .price-strike path{stroke-dashoffset:0}
+.price-card.is-struck .price-saving{opacity:1;transform:none}
+.final-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.final-price s{font-size:18px;color:#a9c4ff;text-decoration-color:var(--lime);text-decoration-thickness:2px}
+.final-price strong{font-size:30px;font-weight:800;color:white;letter-spacing:-1px}
+.final-price>span:last-child{flex-basis:100%;font-size:13px}
+@media(max-width:1150px){.pricing h2{font-size:46px}.price-card{padding:34px}}
+@media(max-width:900px){.pricing h2{font-size:38px;letter-spacing:-1.5px}.price-features{margin-top:30px;gap:18px}.price-features strong{font-size:15px}.price-features li span:not(.feature-check){font-size:12px}.price-card{padding:28px}.consultation-grid .price-card .price-new{font-size:52px;letter-spacing:-2.5px}.price-badge{font-size:10px;letter-spacing:1px}}
+@media(max-width:640px){.pricing.section{padding-block:64px}.pricing h2{font-size:41px;letter-spacing:-1.8px}.pricing .consultation-grid{gap:26px}.price-features{margin-top:22px;gap:13px}.price-features li{gap:13px}.feature-check{width:24px;height:24px}.feature-check svg{width:14px;height:14px}.price-features li span:not(.feature-check){margin-top:1px;line-height:1.5}.price-card{padding:28px 23px;border-radius:16px}.consultation-grid .price-card .price-new{font-size:clamp(46px,14vw,60px)}.consultation-grid .price-card .price-old{font-size:22px;margin-top:24px}.price-card .button{margin-top:24px}.final-price strong{font-size:26px}}
+@media(max-width:360px){.pricing h2{font-size:34px}.price-badge{font-size:9px;padding:7px 10px}.price-card .button{font-size:11px;padding-inline:16px}}
+@media(prefers-reduced-motion:reduce){.price-card.will-strike .price-strike path,.price-card.will-strike .price-old,.price-card.will-strike .price-saving{transition:none}}

@@ -2,9 +2,9 @@
 
 const WHATSAPP_NUMBER = '77003605300';
 const messages = {
-  default: 'Здравствуйте! Хочу получить программу и стоимость курса Aveno Academy.',
-  program: 'Здравствуйте! Пришлите, пожалуйста, полную программу курса Aveno Academy и стоимость обучения.',
-  faq: 'Здравствуйте! Хочу узнать программу, стоимость курса Aveno Academy и какие инструменты и подписки понадобятся для обучения.',
+  default: 'Здравствуйте! Хочу узнать подробнее о курсе AI Starter от Aveno Academy.',
+  buy: 'Здравствуйте! Хочу записаться на курс AI Starter от Aveno Academy по специальной цене 69 900 ₸.',
+  program: 'Здравствуйте! Пришлите, пожалуйста, программу курса AI Starter от Aveno Academy.',
 };
 const whatsappUrl = (message) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
@@ -39,55 +39,7 @@ document.addEventListener('click', (event) => {
 });
 window.matchMedia('(min-width: 641px)').addEventListener('change', closeMenu);
 
-const form = document.querySelector('#lead-form');
-const nameInput = document.querySelector('#lead-name');
-const phoneInput = document.querySelector('#lead-phone');
-const consentInput = document.querySelector('#lead-consent');
-const formError = document.querySelector('#form-error');
-const feedback = document.querySelector('.form-feedback');
-form.addEventListener('input', () => {
-  formError.hidden = true;
-  nameInput.removeAttribute('aria-invalid');
-  phoneInput.removeAttribute('aria-invalid');
-  consentInput.removeAttribute('aria-invalid');
-  feedback.hidden = true;
-});
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  formError.hidden = true;
-  const name = nameInput.value.trim().replace(/\s+/g, ' ');
-  const rawPhone = phoneInput.value.trim();
-  let digits = rawPhone.replace(/\D/g, '');
-  if (name.length < 2) {
-    formError.textContent = 'Пожалуйста, укажите ваше имя — минимум 2 символа.';
-    formError.hidden = false;
-    nameInput.setAttribute('aria-invalid', 'true');
-    nameInput.focus();
-    return;
-  }
-  if (!/^[+\d\s()\-]+$/.test(rawPhone) || digits.length < 10 || digits.length > 15 || /^(\d)\1+$/.test(digits)) {
-    formError.textContent = 'Проверьте телефон. Укажите номер с кодом страны, например +7 700 360 53 00.';
-    formError.hidden = false;
-    phoneInput.setAttribute('aria-invalid', 'true');
-    phoneInput.focus();
-    return;
-  }
-  if (!consentInput.checked) {
-    formError.textContent = 'Отметьте согласие на обработку персональных данных, чтобы отправить заявку.';
-    formError.hidden = false;
-    consentInput.setAttribute('aria-invalid', 'true');
-    consentInput.focus();
-    return;
-  }
-  if (digits.length === 11 && digits.startsWith('8')) digits = `7${digits.slice(1)}`;
-  if (digits.length === 10 && !rawPhone.startsWith('+')) digits = `7${digits}`;
-  const url = whatsappUrl(`Здравствуйте! Хочу получить программу и стоимость курса Aveno Academy.\n\nМеня зовут: ${name}\nМой телефон: +${digits}\n\nРасскажите, пожалуйста, о программе и стоимости обучения.`);
-  document.querySelector('#form-fallback').href = url;
-  window.open(url, '_blank', 'noopener,noreferrer');
-  feedback.hidden = false;
-});
-
-// Hide the fixed mobile CTA while an equivalent main action or the form is in view.
+// Hide the fixed mobile CTA while an equivalent main action or the price card is in view.
 const fixedCta = document.querySelector('.mobile-cta');
 if ('IntersectionObserver' in window) {
   const visibleActions = new Set();
@@ -100,6 +52,18 @@ if ('IntersectionObserver' in window) {
     fixedCta.classList.toggle('is-hidden', hide);
     fixedCta.inert = hide;
   }, {threshold: 0.2});
-  document.querySelectorAll('.hero .button, #lead-form, .final-section .button').forEach((element) => observer.observe(element));
+  document.querySelectorAll('.hero .button, .price-card, .final-section .button').forEach((element) => observer.observe(element));
+}
+// Strike the old price once, when the price card first scrolls into view.
+const priceCard = document.querySelector('.price-card');
+if (priceCard && 'IntersectionObserver' in window) {
+  priceCard.classList.add('will-strike');
+  const strikeObserver = new IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      priceCard.classList.add('is-struck');
+      strikeObserver.disconnect();
+    }
+  }, {threshold: 0.6});
+  strikeObserver.observe(priceCard);
 }
 document.querySelector('#year').textContent = new Date().getFullYear();
