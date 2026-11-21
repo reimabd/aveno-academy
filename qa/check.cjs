@@ -72,17 +72,15 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright')
       }
     }
     assert.equal(await page.locator('.requisites div').count(), 8);
-    for (const doc of ['privacy', 'consent']) {
-      await page.goto(`http://localhost:4173/${doc}.html`, { waitUntil: 'networkidle' });
-      assert.equal(await page.locator('.doc-links a[aria-current="page"]').getAttribute('href'), `${doc}.html`);
+    assert.equal(await page.locator('.legal-bottom a').count(), 0, 'Landing must not link to legal pages');
+    assert(!(await page.content()).includes('кв. 32'));
+    for (const doc of ['legal/', 'legal/oferta/', 'legal/privacy/']) {
+      await page.goto(`http://localhost:4173/${doc}`, { waitUntil: 'networkidle' });
       for (const width of [320, 390, 1440]) {
         await page.setViewportSize({ width, height: 844 });
         const size = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
         assert(size.scroll <= size.client + 1, `Horizontal overflow on ${doc} at ${width}`);
       }
-      await page.screenshot({ path: path.join(screenshots, `${doc}-desktop.png`) });
-      await page.setViewportSize({ width: 390, height: 844 });
-      await page.screenshot({ path: path.join(screenshots, `${doc}-mobile.png`), fullPage: true });
     }
     assert.deepEqual(errors, []);
     console.log('PASS: 7 responsive widths, no overflow or asset errors, seven-section order, four original SVG cards, all WhatsApp links, FAQ, mobile menu, price block (69 900 ₸ / 89 900 ₸, 4 features, WhatsApp buy message), anchors to #price, requisites, legal pages and correct message. No message sent.');
