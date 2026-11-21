@@ -1,0 +1,117 @@
+/* Юридический раздел /legal/ (скрытый, без ссылок с лендинга). Дополняет legal.css. */
+.page-docs .doc{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:72px;padding-block:72px 100px}
+.page-docs .doc-head{top:28px;max-height:calc(100vh - 56px);overflow:auto;scrollbar-width:thin;padding-right:6px}
+.page-docs .doc-head h1{font-size:46px;hyphens:manual}
+.page-docs .doc-head h1.h1-long{font-size:34px;letter-spacing:-1.4px}
+.page-docs .doc-head .eyebrow{color:var(--blue);margin-bottom:20px}
+.page-docs .doc-date{display:inline-block;margin-top:18px;padding:7px 12px;border-radius:999px;background:var(--paper);font-size:11px;font-weight:700;color:#5c616b}
+.doc-print{display:flex;align-items:center;gap:8px;margin-top:16px;padding:0;border:0;background:none;font-size:11px;font-weight:700;color:var(--muted)}
+.doc-print:hover{color:var(--blue)}
+.doc-print svg{width:15px;height:15px}
+.page-docs .doc-links{margin-top:28px}
+.page-docs .doc-links a{justify-content:space-between;gap:14px;line-height:1.4}
+.page-docs .doc-links a:hover{color:var(--blue)}
+
+.doc-toc{margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+.doc-toc summary{list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#a0a5ad;cursor:pointer}
+.doc-toc summary::-webkit-details-marker{display:none}
+.doc-toc summary span{font-size:18px;font-weight:400;transition:transform .2s}
+.doc-toc[open] summary span{transform:rotate(45deg)}
+.doc-toc ol{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:2px}
+.doc-toc a{display:block;padding:6px 10px;margin-left:-10px;border-radius:6px;font-size:12px;font-weight:600;line-height:1.45;color:#5c616b;transition:background .15s,color .15s}
+.doc-toc a:hover{color:var(--ink);background:var(--paper)}
+.doc-toc a.is-active{color:var(--blue);background:#eaf1ff}
+
+.page-docs .doc-body{max-width:720px}
+.page-docs .doc-body>.doc-lead,.doc-lead{font-size:18px;line-height:1.65;color:var(--ink);font-weight:500;padding-bottom:8px}
+.doc-section{scroll-margin-top:24px}
+.page-docs .doc-body h2{margin-top:52px}
+.doc-section:first-of-type h2:not(.visually-hidden){margin-top:40px}
+.page-docs .doc-body p+p{margin-top:12px}
+
+/* Пункты договора с висящей нумерацией */
+.clause{display:grid;grid-template-columns:52px minmax(0,1fr);gap:0 6px;padding:11px 0;border-top:1px solid #eef0f2}
+.doc-section h2+.clause{border-top:0}
+.clause-num{font-size:13px;font-weight:800;color:var(--blue);font-variant-numeric:tabular-nums;line-height:1.75}
+.clause ul{margin:10px 0 2px;padding:0;list-style:none}
+.clause li{position:relative;padding-left:20px}
+.clause li::before{content:"";position:absolute;left:3px;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 1px #b8d940}
+.clause li+li{margin-top:6px}
+
+/* Карточка с реквизитами */
+.req-card{display:grid;grid-template-columns:minmax(0,1fr);margin:18px 0 0;background:var(--paper);border-radius:16px;padding:6px 24px}
+.req-card div{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;padding:13px 0;border-top:1px solid #e3e5e9}
+.req-card div:first-child{border-top:0}
+.req-card dt{font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#8b9099;line-height:2}
+.req-card dd{margin:0;color:var(--ink);font-weight:600;overflow-wrap:anywhere}
+.req-card+p{margin-top:16px}
+
+/* Информационная страница */
+.buy-card{margin-top:28px;background:radial-gradient(120% 90% at 100% 0%,#d9ff651c,transparent 55%),var(--ink);color:#fff;border-radius:18px;padding:36px 38px;box-shadow:0 18px 40px #00308a40}
+.buy-price{font-size:clamp(48px,5vw,68px);font-weight:800;letter-spacing:-3px;line-height:1.05;margin-top:22px;white-space:nowrap}
+.page-docs .doc-body .buy-note{color:#b9bec8;font-size:13px;line-height:1.6;margin-top:12px;max-width:460px}
+.buy-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;margin:28px 0 0;padding-top:24px;border-top:1px solid #3c3d40}
+.buy-facts dt{font-size:9px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:#8a909c;margin-bottom:5px}
+.buy-facts dd{margin:0;font-size:14px;font-weight:700;color:#fff;line-height:1.45}
+.check-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:12px}
+.check-list li{display:flex;align-items:center;gap:14px;color:var(--ink);font-weight:600}
+.fact-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.fact-list div{background:#eaf1ff;border:1px solid #d6e4ff;border-radius:12px;padding:14px 18px}
+.fact-list dt{font-size:9px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:var(--blue);margin-bottom:4px}
+.fact-list dd{margin:0;font-weight:800;color:var(--ink);font-size:15px;line-height:1.4}
+.page-docs .doc-body .doc-note{margin-top:18px;padding:14px 18px;border-left:3px solid var(--lime);background:var(--paper);border-radius:0 10px 10px 0;font-size:13px}
+.doc-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.page-docs .doc-body a.doc-tile{display:flex;flex-direction:column;gap:10px;padding:24px;border:1px solid var(--line);border-radius:16px;color:#5c616b;font-weight:500;font-size:13px;line-height:1.6;transition:border-color .2s,transform .2s,box-shadow .2s}
+.page-docs .doc-body a.doc-tile:hover{border-color:var(--blue);transform:translateY(-2px);box-shadow:0 8px 24px #0664ff14}
+.doc-tile strong{font-size:17px;letter-spacing:-.4px;line-height:1.3}
+.doc-tile-icon{width:42px;height:42px;border-radius:10px;background:#eaf1ff;color:var(--blue);display:grid;place-items:center}
+.doc-tile-icon svg{width:21px;height:21px}
+.doc-tile-link{margin-top:auto;padding-top:6px;display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:800;color:var(--blue)}
+.doc-tile-link svg{width:16px;height:16px}
+.page-docs .doc-body .doc-accept{margin-top:18px;font-size:13px;color:var(--muted)}
+
+/* Незаполненные места: видны, чтобы их не опубликовали случайно */
+mark.todo{background:#fff1b8;color:#7a5b00;padding:1px 4px;border-radius:4px;font-weight:700}
+
+@media(max-width:1100px){.page-docs .doc{gap:48px}.page-docs .doc-head h1{font-size:40px}.page-docs .doc-head h1.h1-long{font-size:30px}}
+@media(max-width:900px){
+  .page-docs .doc{grid-template-columns:minmax(0,1fr);gap:28px;padding-block:44px 72px}
+  .page-docs .doc-head{max-height:none;overflow:visible;padding-right:0}
+  .page-docs .doc-links{margin-top:22px}
+  .doc-toc{margin-top:0;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .doc-toc ol{max-height:50vh;overflow:auto}
+  .page-docs .doc-head .doc-links+.doc-toc{margin-top:22px}
+}
+@media(max-width:640px){
+  .page-docs .doc{padding-block:32px 56px}
+  .page-docs .doc-head h1{font-size:36px}
+  .page-docs .doc-head h1.h1-long{font-size:27px;letter-spacing:-1px}
+  .page-docs .doc-links{gap:0;padding-top:8px}
+  .page-docs .doc-links a{padding:10px 0;border-bottom:1px solid #eef0f2}
+  .page-docs .doc-links a:last-child{border-bottom:0}
+  .doc-lead,.page-docs .doc-body>.doc-lead{font-size:16px}
+  .page-docs .doc-body h2{font-size:19px;margin-top:40px}
+  .clause{grid-template-columns:40px minmax(0,1fr);gap:0 4px}
+  .clause-num{font-size:12px}
+  .req-card{padding:4px 18px}
+  .req-card div{grid-template-columns:minmax(0,1fr);gap:2px;padding:12px 0}
+  .req-card dt{line-height:1.6}
+  .buy-card{padding:26px 22px;border-radius:16px}
+  .buy-price{font-size:clamp(44px,13vw,56px);letter-spacing:-2px}
+  .buy-facts,.fact-list,.doc-cards{grid-template-columns:minmax(0,1fr)}
+  .buy-facts{gap:14px}
+  .check-list{gap:10px}
+  .check-list li{align-items:flex-start;font-size:14px}
+  .page-docs .legal{padding-bottom:40px}
+}
+@media print{
+  .header,.skip-link,.doc-links,.doc-toc,.doc-print,.legal-bottom nav{display:none!important}
+  .page-docs .doc{display:block;padding:0;width:100%}
+  .page-docs .doc-head{position:static;max-height:none;overflow:visible}
+  .page-docs .doc-body{max-width:none;font-size:11pt}
+  .buy-card{background:none;color:var(--ink);border:1px solid #999;box-shadow:none}
+  .buy-facts dd,.buy-price{color:var(--ink)}
+  .clause,.req-card div{break-inside:avoid}
+  .page-docs .doc-body a{color:inherit}
+  mark.todo{background:none}
+}
